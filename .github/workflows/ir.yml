@@ -1,16 +1,34 @@
-name: Enviar a GoFile
+name: Descarga Masiva y Comprimir
 on:
   workflow_dispatch:
     inputs:
-      url:
-        description: 'URL del archivo'
+      inicio:
+        description: 'ID de inicio (ej: 1)'
         required: true
+        default: '1'
+      fin:
+        description: 'ID de fin (ej: 1000)'
+        required: true
+        default: '1000'
+      nombre:
+        description: 'Nombre del archivo ZIP'
+        required: true
+        default: 'ccytem'
+      subir:
+        description: '¿Subir a GoFile? (si/no)'
+        required: true
+        default: 'si'
+
 jobs:
-  descarga:
+  descargar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Instalar requests
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Instalar dependencias
         run: pip install requests
-      - name: Ejecutar transferencia
-        run: python descargador.py ${{ github.event.inputs.url }}
+      - name: Ejecutar script
+        run: python descargador.py ${{ github.event.inputs.inicio }} ${{ github.event.inputs.fin }} ${{ github.event.inputs.nombre }} ${{ github.event.inputs.subir }}
