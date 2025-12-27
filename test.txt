@@ -1,0 +1,1 @@
+Test exitoso desde Python sin instalar Git
