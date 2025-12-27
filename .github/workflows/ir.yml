@@ -1,0 +1,16 @@
+name: Enviar a GoFile
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'URL del archivo'
+        required: true
+jobs:
+  descarga:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar requests
+        run: pip install requests
+      - name: Ejecutar transferencia
+        run: python descargador.py ${{ github.event.inputs.url }}
